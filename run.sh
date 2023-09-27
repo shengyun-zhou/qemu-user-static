@@ -4,10 +4,8 @@ set -xe
 # A POSIX variable
 OPTIND=1 # Reset in case getopts has been used previously in the shell.
 
-while getopts "r:t:d:" opt; do
+while getopts "t:d:" opt; do
     case "$opt" in
-        r)  REPO=$OPTARG
-        ;;
         t)  TAG_VER=$OPTARG
         ;;
         d)  DOCKER_REPO=$OPTARG
@@ -39,6 +37,7 @@ cd ${root_dir}
 
 # Generate register files.
 cp -p "${out_dir}/latest/register.sh" "${out_dir}/register/"
+cp -p "${out_dir}/latest/qemu-binfmt-conf.sh" "${out_dir}/register/"
 cp -p "${out_dir}/latest/Dockerfile" "${out_dir}/register/"
 # Comment out the line to copy qemu-*-static not to provide those.
 sed -i '/^COPY qemu/ s/^/#/' "${out_dir}/register/Dockerfile"
